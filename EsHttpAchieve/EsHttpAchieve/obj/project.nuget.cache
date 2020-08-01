@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "P8C07R4RW9+Vi6sieblB6MmUgppPAQPtcdxraedMddTXO1aHU6/2NJJKM/EnRr1WgtwtW3WOfC65rRAQycLfiA==",
+  "success": true,
+  "projectFilePath": "G:\\learn\\Package\\EsHttp\\EsHttpAchieve\\EsHttpAchieve\\EsHttpAchieve.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\23663\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\microsoft.openapi\\1.1.4\\microsoft.openapi.1.1.4.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\swashbuckle.aspnetcore\\5.5.1\\swashbuckle.aspnetcore.5.5.1.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.5.1\\swashbuckle.aspnetcore.swagger.5.5.1.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.5.1\\swashbuckle.aspnetcore.swaggergen.5.5.1.nupkg.sha512",
+    "C:\\Users\\23663\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.5.1\\swashbuckle.aspnetcore.swaggerui.5.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}
