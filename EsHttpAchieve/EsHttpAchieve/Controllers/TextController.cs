@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EsHttpAchieve.ElasticSearch;
+using EsHttpAchieve.ElasticSearch.ElasticSearchEnums;
 using EsHttpAchieve.Entities;
 using EsHttpAchieve.Extensions;
 
@@ -28,7 +29,7 @@ namespace EsHttpAchieve.Controllers
                 CreateTime = DateTime.Now,
                 Remark = RandomGeneratorExtension.GenerateChineseWord(10)
             };
-            await _elasticSearchService.IndexAsync(test);
         }
+
     }
 }

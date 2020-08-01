@@ -28,7 +28,8 @@ namespace EsHttpAchieve.ElasticSearch
                 return new EsHttpResult { IsSuccess = false, Message = "参数错误" };
             }
 
-            var path =  _url + $"/{table}/{operation}/{id}".Trim('/').Replace("//","/");
+            var path =  $"{_url}/" + $"{table}/{operation}/{id}".Trim('/').Replace("//","/");
+            Console.WriteLine(path);
 
             EsHttpResult esHttpResult;
             try
@@ -37,9 +38,7 @@ namespace EsHttpAchieve.ElasticSearch
                 var content = new StringContent(body, Encoding.UTF8);
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var request = new HttpRequestMessage(httpMethod, path) {Content = content};
-
                 var response = await client.SendAsync(request);
-
 
                 esHttpResult = new EsHttpResult{IsSuccess = true, Message = await response.Content.ReadAsStringAsync()};
             }
