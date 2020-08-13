@@ -69,6 +69,9 @@ namespace EsHttpAchieve.Controllers
                 .AddChildNode(new QueryNode {Name = "Description"})
                 .AddNode(new QueryNode {Name = "query", Value = searchStr});
 
+            queryNode.AddNode(new QueryNode { Name = "from", Value = "1"});
+            queryNode.AddNode(new QueryNode { Name = "size", Value = "3"});
+
            var res = await  _elasticSearchService.SearchAsync<Product>(queryNode);
 
            Console.WriteLine(res);

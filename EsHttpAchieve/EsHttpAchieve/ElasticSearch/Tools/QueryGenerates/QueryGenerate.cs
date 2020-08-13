@@ -35,9 +35,9 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
                 string sonStr = "";
                 foreach (var node in queryNode.Node)
                 {
-                    sonStr += node.GenerateQueryString();
+                    sonStr += node.GenerateQueryString() + ",";
                 }
-
+                sonStr = sonStr.Substring(0, sonStr.Length - 1);
                 return queryNode.Name == null ? "{" + sonStr + "}" : $"\"{queryNode.Name}\"" + ":{" + sonStr + "}";
             }
             else

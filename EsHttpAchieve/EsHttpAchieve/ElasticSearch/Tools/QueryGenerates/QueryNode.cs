@@ -7,11 +7,18 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 {
     public class QueryNode
     {
+        public QueryNode()
+        {
+            Node = new List<QueryNode>();
+        }
+
         public QueryNode FatherNode { get; set; }
 
         public string Name { get; set; }
+
         public string Value { get; set; }
 
-        public List<QueryNode> Node = new List<QueryNode>();
+        public List<QueryNode> Node { get; set; }
+
     }
 }
