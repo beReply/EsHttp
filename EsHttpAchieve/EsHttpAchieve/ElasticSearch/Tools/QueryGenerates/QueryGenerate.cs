@@ -8,14 +8,14 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 {
     public static class QueryGenerate
     {
-        public static QueryNode AddChildNode(this QueryNode fatherNode, string name, string value)
+        public static QueryNode AddChildNode(this QueryNode fatherNode, string name, string value = null)
         {
             var sonNode = new QueryNode {Name = name, Value = value, FatherNode = fatherNode};
             fatherNode.Node.Add(sonNode);
             return sonNode;
         }
 
-        public static QueryNode AddNode(this QueryNode fatherNode, string name, string value)
+        public static QueryNode AddNode(this QueryNode fatherNode, string name, string value = null)
         {
             var sonNode = new QueryNode { Name = name, Value = value, FatherNode = fatherNode };
             fatherNode.Node.Add(sonNode);

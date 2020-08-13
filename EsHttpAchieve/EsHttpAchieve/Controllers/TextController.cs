@@ -67,9 +67,9 @@ namespace EsHttpAchieve.Controllers
             queryNode
                 .AddNode("from", "1")
                 .AddNode("size","3")
-                .AddChildNode("query", null)
-                .AddChildNode("match", null)
-                .AddChildNode("Description", null)
+                .AddChildNode("query")
+                .AddChildNode("match")
+                .AddChildNode("Description")
                 .AddNode("query", searchStr);
 
 
