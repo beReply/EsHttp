@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EsHttpAchieve.ElasticSearch.Params;
 using static EsHttpAchieve.ElasticSearch.ElasticSearchEnums.ElasticSearchEnum;
+using EsHttpAchieve.ElasticSearch.Tools.QueryGenerates;
 
 namespace EsHttpAchieve.ElasticSearch
 {
@@ -17,5 +18,7 @@ namespace EsHttpAchieve.ElasticSearch
         Task<EsHttpResult> DeleteAsync<T>(Guid id) where T : IHasGuidAsId;
 
         Task<EsHttpResult> UpdateAsync<T>(T data) where T : IHasGuidAsId;
+
+        Task<EsHttpResult> SearchAsync<T>(QueryNode queryNode) where T : IHasGuidAsId;
     }
 }

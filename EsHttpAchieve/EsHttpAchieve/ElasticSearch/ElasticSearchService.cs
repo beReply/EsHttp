@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using EsHttpAchieve.ElasticSearch.ElasticSearchEnums;
 using EsHttpAchieve.ElasticSearch.Params;
+using EsHttpAchieve.ElasticSearch.Tools.QueryGenerates;
 using EsHttpAchieve.IConstraint;
 using Newtonsoft.Json;
 using static EsHttpAchieve.ElasticSearch.ElasticSearchEnums.ElasticSearchEnum;
@@ -79,6 +80,13 @@ namespace EsHttpAchieve.ElasticSearch
 
         #endregion
 
+        public async Task<EsHttpResult> SearchAsync<T>(QueryNode queryNode) where T : IHasGuidAsId
+        {
+            var body = queryNode.GenerateQueryString();
 
+            return await _esHttpHelper
+                .SendAsync(HttpMethod.Get, typeof(T).Name.ToLower(),
+                    ElasticOperation._doc.ToString(), ElasticOperation._search.ToString(), body);
+        }
     }
 }

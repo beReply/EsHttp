@@ -73,5 +73,13 @@ namespace EsHttpAchieve.Extensions
             }
             return chineseWords;
         }
+
+
+        public static T RandomArray<T>(T[] ens)
+        {
+            var random = new Random();
+            var enRandom = ens[random.Next(0, ens.Length)];
+            return enRandom;
+        }
     }
 }

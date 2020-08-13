@@ -11,7 +11,6 @@ namespace EsHttpAchieve.Extensions
 
         public static bool IsNullOrWhiteSpace(this string str)
         {
-            str = str.Trim();
             if (string.IsNullOrEmpty(str))
             {
                 return true;
