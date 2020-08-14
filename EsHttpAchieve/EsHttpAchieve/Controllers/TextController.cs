@@ -64,10 +64,10 @@ namespace EsHttpAchieve.Controllers
         {
             var queryNode = new QueryNode();
 
-            queryNode.AddChildNode("query")
-                .AddChildNode("query_string")
+            queryNode.AddNodeAndToChild("query")
+                .AddNodeAndToChild("query_string")
                 .AddNode("query", $"{searchStr1} AND {searchStr2}")
-                .AddArrayNode("fields").AddNode("Description", "Description").AddNode("Remark", "Remark");
+                .AddArrayNodeAndToChild("fields").AddNode(null, "Description").AddNode( null, "Remark");
 
 
 

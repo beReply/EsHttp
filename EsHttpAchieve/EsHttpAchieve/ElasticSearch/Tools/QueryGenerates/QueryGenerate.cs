@@ -10,7 +10,16 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 {
     public static class QueryGenerate
     {
-        public static QueryNode AddChildNode(this QueryNode fatherNode, string name, string value = null)
+        #region 添加节点
+
+        /// <summary>
+        /// 增加一个 子节点 并指向该 子节点 (普通节点或叶子节点)
+        /// </summary>
+        /// <param name="fatherNode"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static QueryNode AddNodeAndToChild(this QueryNode fatherNode, string name, string value = null)
         {
             var sonNode = new QueryNode(name, value) { FatherNode = fatherNode };
 
@@ -18,20 +27,64 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
             return sonNode;
         }
 
+        /// <summary>
+        /// 增加一个子节点(普通节点或叶子节点)
+        /// </summary>
+        /// <param name="fatherNode"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static QueryNode AddNode(this QueryNode fatherNode, string name, string value = null)
         {
-            var sonNode = new QueryNode(name, value) {FatherNode = fatherNode};
+            var sonNode = new QueryNode(name, value) { FatherNode = fatherNode };
             fatherNode.Node.Add(sonNode);
             return fatherNode;
         }
 
-        public static QueryNode AddArrayNode(this QueryNode fatherNode, string name, string value = null)
+        /// <summary>
+        /// 增加一个子数组节点 并指向该子数组节点
+        /// </summary>
+        /// <param name="fatherNode"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static QueryNode AddArrayNodeAndToChild(this QueryNode fatherNode, string name, string value = null)
         {
             var sonNode = new QueryNode(name, value, NodeType.数组节点) { FatherNode = fatherNode };
             fatherNode.Node.Add(sonNode);
             return sonNode;
         }
 
+        #endregion
+
+
+        #region 指针移动
+
+        /// <summary>
+        /// 获取父节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static QueryNode ToFatherNode(this QueryNode node)
+        {
+            return node.FatherNode;
+        }
+
+        /// <summary>
+        /// 获取对应名字的子节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static QueryNode ToChildNode(this QueryNode node, string name)
+        {
+            return node.Node.Find(x => x.Name == name);
+        }
+
+        #endregion
+
+
+        #region 构建查询Body
 
         public static string GenerateQueryString(this QueryNode queryNode)
         {
@@ -40,7 +93,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
             {
                 if (queryNode.FatherNode.NodeType == NodeType.数组节点)
                 {
-                    return $"\"{queryNode.Name}\"";
+                    return $"\"{queryNode.Value}\"";
                 }
 
                 return $"\"{queryNode.Name}\":\"{queryNode.Value}\"";
@@ -58,7 +111,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 
                 if (queryNode.NodeType == NodeType.数组节点)
                 {
-                    return  $"\"{queryNode.Name}\"" + ":[" + sonStr + "]";
+                    return $"\"{queryNode.Name}\"" + ":[" + sonStr + "]";
                 }
 
                 return queryNode.Name == null ? "{" + sonStr + "}" : $"\"{queryNode.Name}\"" + ":{" + sonStr + "}";
@@ -68,5 +121,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
                 return $"\"{queryNode.Name}\"" + ":{}";
             }
         }
+
+        #endregion
     }
 }

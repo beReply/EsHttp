@@ -9,16 +9,21 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 {
     public class QueryNode
     {
+        /// <summary>
+        /// 如果未指定节点类型，节点类型将通过节点的内容进行判断
+        /// 如果value不为null，则判定节点为叶子节点，为null则为普通节点
+        /// 叶子节点不再拥有添加子节点能力
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="nodeType"></param>
         public QueryNode(string name = null, string value = null, NodeType nodeType = NodeType.普通节点)
         {
-            NodeType = nodeType == NodeType.普通节点 ? value == null ? NodeType.普通节点 : NodeType.叶子节点 : nodeType;
+            NodeType = nodeType == NodeType.普通节点 ? (value == null ? NodeType.普通节点 : NodeType.叶子节点) : nodeType;
             Name = name;
             Value = value;
 
-            if (NodeType != NodeType.叶子节点)
-            {
-                Node = new List<QueryNode>();
-            }
+            if (NodeType != NodeType.叶子节点) { Node = new List<QueryNode>(); }
         }
 
         #region 树

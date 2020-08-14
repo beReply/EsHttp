@@ -10,8 +10,8 @@ namespace EsHttpAchieve.Enums
         public enum NodeType
         {
             普通节点 = 0,
-            数组节点 = 1,
-            叶子节点 = 2
+            叶子节点 = 1,
+            数组节点 = 2
         }
         
     }
