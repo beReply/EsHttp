@@ -1,24 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using static EsHttpAchieve.Enums.EsQueryEnum;
 
 namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
 {
     public class QueryNode
     {
-        public QueryNode()
+        public QueryNode(string name = null, string value = null, NodeType nodeType = NodeType.普通节点)
         {
-            Node = new List<QueryNode>();
+            NodeType = nodeType == NodeType.普通节点 ? value == null ? NodeType.普通节点 : NodeType.叶子节点 : nodeType;
+            Name = name;
+            Value = value;
+
+            if (NodeType != NodeType.叶子节点)
+            {
+                Node = new List<QueryNode>();
+            }
         }
 
+        #region 树
+
+        [DisplayName("父节点")]
         public QueryNode FatherNode { get; set; }
 
+        [DisplayName("子节点")]
+        public List<QueryNode> Node { get; set; }
+
+        #endregion
+
+
+        #region 值
+
+        [DisplayName("节点名")]
         public string Name { get; set; }
 
+        [DisplayName("节点值")]
         public string Value { get; set; }
 
-        public List<QueryNode> Node { get; set; }
+        [DisplayName("节点类型")]
+        public NodeType NodeType { get; set; }
+
+        #endregion
 
     }
 }

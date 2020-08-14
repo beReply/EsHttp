@@ -86,7 +86,7 @@ namespace EsHttpAchieve.ElasticSearch
 
             return await _esHttpHelper
                 .SendAsync(HttpMethod.Get, typeof(T).Name.ToLower(),
-                    ElasticOperation._doc.ToString(), ElasticOperation._search.ToString(), body);
+                    ElasticOperation._search.ToString(), null, body);
         }
     }
 }

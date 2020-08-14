@@ -20,7 +20,7 @@ namespace EsHttpAchieve.ElasticSearch
             _clientFactory = clientFactory;
         }
 
-        public async Task<EsHttpResult> SendAsync(HttpMethod httpMethod, string table, string operation, string id, string body)
+        public async Task<EsHttpResult> SendAsync(HttpMethod httpMethod, string table, string operation, string handle, string body)
         {
             if (table.IsNullOrWhiteSpace() || operation.IsNullOrWhiteSpace())
             {
@@ -28,7 +28,7 @@ namespace EsHttpAchieve.ElasticSearch
                 return new EsHttpResult { IsSuccess = false, Message = "参数错误" };
             }
 
-            var path =  $"{_url}/" + $"{table}/{operation}/{id}".Trim('/').Replace("//","/");
+            var path =  $"{_url}/" + $"{table}/{operation}/{handle}".Trim('/').Replace("//","/");
             Console.WriteLine(path);
 
             EsHttpResult esHttpResult;

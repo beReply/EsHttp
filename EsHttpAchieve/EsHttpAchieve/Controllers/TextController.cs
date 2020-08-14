@@ -60,17 +60,15 @@ namespace EsHttpAchieve.Controllers
         }
 
         [HttpPost("/Search/Product")]
-        public async Task<EsHttpResult> SearchProductAsync(string searchStr)
+        public async Task<EsHttpResult> SearchProductAsync(string searchStr1, string searchStr2)
         {
             var queryNode = new QueryNode();
 
-            queryNode
-                .AddNode("from", "1")
-                .AddNode("size","3")
-                .AddChildNode("query")
-                .AddChildNode("match")
-                .AddChildNode("Description")
-                .AddNode("query", searchStr);
+            queryNode.AddChildNode("query")
+                .AddChildNode("query_string")
+                .AddNode("query", $"{searchStr1} AND {searchStr2}")
+                .AddArrayNode("fields").AddNode("Description", "Description").AddNode("Remark", "Remark");
+
 
 
 

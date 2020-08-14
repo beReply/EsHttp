@@ -9,6 +9,6 @@ namespace EsHttpAchieve.ElasticSearch
 {
     public interface IEsHttpHelper
     {
-        Task<EsHttpResult> SendAsync(HttpMethod httpMethod, string table, string operation, string id, string body);
+        Task<EsHttpResult> SendAsync(HttpMethod httpMethod, string table, string operation, string handle, string body);
     }
 }
