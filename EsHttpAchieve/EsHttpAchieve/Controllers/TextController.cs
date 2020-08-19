@@ -11,6 +11,7 @@ using EsHttpAchieve.Extensions;
 using static EsHttpAchieve.Enums.ProductEnum;
 using System.Security.Cryptography;
 using EsHttpAchieve.ElasticSearch.Params;
+using EsHttpAchieve.ElasticSearch.Tools.QueryExpressions;
 using EsHttpAchieve.ElasticSearch.Tools.QueryGenerates;
 
 namespace EsHttpAchieve.Controllers
@@ -77,6 +78,20 @@ namespace EsHttpAchieve.Controllers
            Console.WriteLine(res);
 
            return res;
+        }
+
+        [HttpPost("/Search/Expr")]
+        public async Task<EsHttpResult> SearchExprAsync()
+        {
+            var queryNode = new QueryNode();
+
+            queryNode.Query().Range<Product>(x => x.Price < 10);
+
+            var res = await _elasticSearchService.SearchAsync<Product>(queryNode);
+
+            Console.WriteLine(res);
+
+            return res;
         }
     }
 }
