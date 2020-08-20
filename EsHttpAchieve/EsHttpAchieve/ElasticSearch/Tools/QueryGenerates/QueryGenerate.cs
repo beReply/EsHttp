@@ -91,9 +91,9 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
             var fatherNode = node.FatherNode;
 
             // 一直向上直到找到根节点
-            while (!(fatherNode.Value == null && fatherNode.Value == null && fatherNode.NodeType == NodeType.普通节点))
+            while (!(fatherNode.Value == null && fatherNode.Name == null && fatherNode.NodeType == NodeType.普通节点))
             {
-                fatherNode = node.FatherNode;
+                fatherNode = fatherNode.FatherNode;
             }
 
             return fatherNode;

@@ -15,7 +15,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "query"))
             {
-                node.ToChildNode("query");
+                return node.ToChildNode("query");
             }
             return node.AddNodeAndToChild("query");
         }
@@ -28,7 +28,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "bool"))
             {
-                node.ToChildNode("bool");
+                return node.ToChildNode("bool");
             }
             return node.AddNodeAndToChild("bool");
         }
@@ -38,17 +38,17 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "must"))
             {
-                node.ToChildNode("must");
+                return node.ToChildNode("must");
             }
             return node.AddNodeAndToChild("must");
         }
 
-        // 子句必须满足，并且会影响score
+        // 子句必须满足(多个条件)，并且会影响score
         public static QueryNode MultiMust(this QueryNode node)
         {
             if (node.Node.Any(x => x.Name == "must"))
             {
-                node.ToChildNode("must");
+                return node.ToChildNode("must");
             }
             return node.AddArrayNodeAndToChild("must");
         }
@@ -60,7 +60,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "filter"))
             {
-                node.ToChildNode("filter");
+                return node.ToChildNode("filter");
             }
             return node.AddNodeAndToChild("filter");
         }
@@ -70,7 +70,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "must_not"))
             {
-                node.ToChildNode("must_not");
+                return node.ToChildNode("must_not");
             }
             return node.AddNodeAndToChild("must_not");
         }
@@ -80,7 +80,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         {
             if (node.Node.Any(x => x.Name == "should"))
             {
-                node.ToChildNode("should");
+                return node.ToChildNode("should");
             }
             return node.AddNodeAndToChild("should");
         }
@@ -88,6 +88,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
         #endregion
 
 
+        #region 查询子句
 
         public static QueryNode Range<T>(this QueryNode node, Expression<Func<T, bool>> expression)
         {
@@ -123,7 +124,7 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
             return node;
         }
 
-        public static QueryNode Where<T>(this QueryNode node, Expression<Func<T, bool>> expression)
+        public static QueryNode RangeOrMatch<T>(this QueryNode node, Expression<Func<T, bool>> expression)
         {
             var visitor = new EsExpressionVisitor();
             visitor.Visit(expression);
@@ -152,6 +153,25 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
             return node;
         }
 
+        #endregion
+
+
+        #region 查询糖
+
+        /// <summary>
+        /// 使用了bool复合查询，在must中添加多个查询条件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static QueryNode Where<T>(this QueryNode node, Expression<Func<T, bool>> expression)
+        {
+            return node.Query().Bool().MultiMust().RangeOrMatch<T>(expression).ToRootNode();
+        }
+
+
+        #endregion
 
     }
 }
