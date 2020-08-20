@@ -178,6 +178,17 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
 
         #region 查询糖
 
+
+        public static QueryNode From(this QueryNode node, int from)
+        {
+            return node.AddNode("from", from.ToString());
+        }
+
+        public static QueryNode Size(this QueryNode node, int size)
+        {
+            return node.AddNode("size", size.ToString());
+        }
+
         /// <summary>
         /// 使用了bool复合查询，在must中添加多个查询条件
         /// </summary>

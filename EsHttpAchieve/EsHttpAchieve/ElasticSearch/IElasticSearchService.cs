@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EsHttpAchieve.ElasticSearch.Params;
 using static EsHttpAchieve.ElasticSearch.ElasticSearchEnums.ElasticSearchEnum;
 using EsHttpAchieve.ElasticSearch.Tools.QueryGenerates;
+using EsHttpAchieve.ElasticSearch.Params.MessageResponse;
 
 namespace EsHttpAchieve.ElasticSearch
 {
@@ -19,6 +20,6 @@ namespace EsHttpAchieve.ElasticSearch
 
         Task<EsHttpResult> UpdateAsync<T>(T data) where T : IHasGuidAsId;
 
-        Task<EsHttpResult> SearchAsync<T>(QueryNode queryNode) where T : IHasGuidAsId;
+        Task<EsMessage<T>> SearchAsync<T>(QueryNode queryNode) where T : IHasGuidAsId;
     }
 }

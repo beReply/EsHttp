@@ -11,6 +11,7 @@ using EsHttpAchieve.Extensions;
 using static EsHttpAchieve.Enums.ProductEnum;
 using System.Security.Cryptography;
 using EsHttpAchieve.ElasticSearch.Params;
+using EsHttpAchieve.ElasticSearch.Params.MessageResponse;
 using EsHttpAchieve.ElasticSearch.Tools.QueryExpressions;
 using EsHttpAchieve.ElasticSearch.Tools.QueryGenerates;
 
@@ -61,7 +62,7 @@ namespace EsHttpAchieve.Controllers
         }
 
         [HttpPost("/Search/Product")]
-        public async Task<EsHttpResult> SearchProductAsync(string searchStr1, string searchStr2)
+        public async Task<EsMessage<Product>> SearchProductAsync(string searchStr1, string searchStr2)
         {
             var queryNode = new QueryNode();
 
@@ -73,7 +74,7 @@ namespace EsHttpAchieve.Controllers
 
 
 
-            var res = await  _elasticSearchService.SearchAsync<Product>(queryNode);
+            var res = await _elasticSearchService.SearchAsync<Product>(queryNode);
 
            Console.WriteLine(res);
 
@@ -81,11 +82,11 @@ namespace EsHttpAchieve.Controllers
         }
 
         [HttpPost("/Search/Expr")]
-        public async Task<EsHttpResult> SearchExprAsync()
+        public async Task<EsMessage<Product>> SearchExprAsync()
         {
             var queryNode = new QueryNode();
 
-            queryNode.Where<Product>(x => x.Price == 10);
+            queryNode.Where<Product>(x => x.Price < 10).From(0).Size(100);
 
             var res = await _elasticSearchService.SearchAsync<Product>(queryNode);
 
