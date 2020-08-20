@@ -80,6 +80,8 @@ namespace EsHttpAchieve.ElasticSearch
 
         #endregion
 
+        #region 查询
+
         public async Task<EsHttpResult> SearchAsync<T>(QueryNode queryNode) where T : IHasGuidAsId
         {
             var body = queryNode.GenerateQueryString();
@@ -88,5 +90,9 @@ namespace EsHttpAchieve.ElasticSearch
                 .SendAsync(HttpMethod.Get, typeof(T).Name.ToLower(),
                     ElasticOperation._search.ToString(), null, body);
         }
+
+        #endregion
+
+        
     }
 }

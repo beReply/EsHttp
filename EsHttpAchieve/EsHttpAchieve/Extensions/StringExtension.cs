@@ -39,7 +39,7 @@ namespace EsHttpAchieve.Extensions
             }
             else
             {
-                return "lt";
+                return binaryExprStr;
             }
         }
     }

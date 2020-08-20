@@ -100,9 +100,19 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
             var propType = typeof(T).GetProperty(exprStr[0])?.PropertyType;
             if (propType?.BaseType == typeof(ValueType))
             {
-                node.AddNodeAndToChild("range")
-                    .AddNodeAndToChild(exprStr[0])
-                    .AddNode(exprStr[1].ToEsOperator(), exprStr[2]);
+                if (exprStr[1].ToEsOperator() != exprStr[1])
+                {
+                    node.AddNodeAndToChild("range")
+                        .AddNodeAndToChild(exprStr[0])
+                        .AddNode(exprStr[1].ToEsOperator(), exprStr[2]);
+                }
+                else if (exprStr[1] == "Equal")
+                {
+                    node.AddNodeAndToChild("range")
+                        .AddNodeAndToChild(exprStr[0])
+                        .AddNode("gte", exprStr[2])
+                        .AddNode("lte", exprStr[2]);
+                }
             }
             return node;
         }
@@ -137,9 +147,19 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryExpressions
 
                 if (propType?.BaseType == typeof(ValueType))
                 {
-                    node.AddNodeAndToChild("range")
-                        .AddNodeAndToChild(element[0])
-                        .AddNode(element[1].ToEsOperator(), element[2]);
+                    if (element[1].ToEsOperator() != element[1])
+                    {
+                        node.AddNodeAndToChild("range")
+                            .AddNodeAndToChild(element[0])
+                            .AddNode(element[1].ToEsOperator(), element[2]);
+                    }
+                    else if (element[1] == "Equal")
+                    {
+                        node.AddNodeAndToChild("range")
+                            .AddNodeAndToChild(element[0])
+                            .AddNode("gte", element[2])
+                            .AddNode("lte", element[2]);
+                    }
                 }
 
                 if (propType == typeof(string))

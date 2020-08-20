@@ -6,18 +6,20 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using EsHttpAchieve.ElasticSearch.Params;
+using EsHttpAchieve.ElasticSearch.Tools;
 using EsHttpAchieve.Extensions;
 
 namespace EsHttpAchieve.ElasticSearch
 {
     public class EsHttpHelper : IEsHttpHelper
     {
+        private readonly ElasticSearchConf _elasticSearchConf;
         private readonly IHttpClientFactory _clientFactory;
-        private readonly string _url = "http://localhost:9200";
 
-        public EsHttpHelper(IHttpClientFactory clientFactory)
+        public EsHttpHelper(IHttpClientFactory clientFactory, ElasticSearchConf elasticSearchConf)
         {
             _clientFactory = clientFactory;
+            _elasticSearchConf = elasticSearchConf;
         }
 
         public async Task<EsHttpResult> SendAsync(HttpMethod httpMethod, string table, string operation, string handle, string body)
@@ -28,7 +30,7 @@ namespace EsHttpAchieve.ElasticSearch
                 return new EsHttpResult { IsSuccess = false, Message = "参数错误" };
             }
 
-            var path =  $"{_url}/" + $"{table}/{operation}/{handle}".Trim('/').Replace("//","/");
+            var path =  $"{_elasticSearchConf.Url}/" + $"{table}/{operation}/{handle}".Trim('/').Replace("//","/");
             Console.WriteLine(path);
 
             EsHttpResult esHttpResult;

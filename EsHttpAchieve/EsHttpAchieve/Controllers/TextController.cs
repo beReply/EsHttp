@@ -85,7 +85,7 @@ namespace EsHttpAchieve.Controllers
         {
             var queryNode = new QueryNode();
 
-            queryNode.Where<Product>(x => x.Price < 10  && x.Description.Contains("蜜"));
+            queryNode.Where<Product>(x => x.Price == 10);
 
             var res = await _elasticSearchService.SearchAsync<Product>(queryNode);
 
