@@ -81,6 +81,24 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
             return node.Node.Find(x => x.Name == name);
         }
 
+        /// <summary>
+        /// 获取根节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static QueryNode ToRootNode(this QueryNode node)
+        {
+            var fatherNode = node.FatherNode;
+
+            // 一直向上直到找到根节点
+            while (!(fatherNode.Value == null && fatherNode.Value == null && fatherNode.NodeType == NodeType.普通节点))
+            {
+                fatherNode = node.FatherNode;
+            }
+
+            return fatherNode;
+        }
+
         #endregion
 
 
@@ -114,7 +132,14 @@ namespace EsHttpAchieve.ElasticSearch.Tools.QueryGenerates
                     return $"\"{queryNode.Name}\"" + ":[" + sonStr + "]";
                 }
 
-                return queryNode.Name == null ? "{" + sonStr + "}" : $"\"{queryNode.Name}\"" + ":{" + sonStr + "}";
+                var queryStr = queryNode.Name == null ? "{" + sonStr + "}" : $"\"{queryNode.Name}\"" + ":{" + sonStr + "}";
+
+                if (queryNode.FatherNode != null && queryNode.FatherNode.NodeType == NodeType.数组节点 && queryNode.Node != null)
+                {
+                    queryStr = "{" + queryStr + "}";
+                }
+
+                return queryStr;
             }
             else
             {
